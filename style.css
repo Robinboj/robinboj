@@ -1,0 +1,21 @@
+body {
+    background-color: #000; /* Schwarzer Hintergrund */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.countdown {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#timer {
+    font-size: 54px; /* 1,5-fache Schriftgröße (ursprünglich 36px) */
+    color: red; /* Roter Text */
+}
