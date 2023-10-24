@@ -1,6 +1,6 @@
 body {
-    background-color: #000; /* Schwarzer Hintergrund */
     font-family: Arial, sans-serif;
+    background-color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,9 +13,31 @@ body {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.input-container {
+    margin: 10px 0;
+}
+
+button {
+    cursor: pointer;
+    background-color: #007BFF; /* Hintergrundfarbe des Buttons */
+    color: #fff; /* Textfarbe des Buttons */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    display: block; /* Zentrieren des Buttons */
+    margin: 0 auto; /* Zentrieren des Buttons */
 }
 
 #timer {
-    font-size: 54px; /* 1,5-fache Schriftgröße (ursprünglich 36px) */
-    color: red; /* Roter Text */
+    font-size: 36px;
+    color: red;
+}
+
+button:hover {
+    background-color: #0056b3; /* Hintergrundfarbe des Buttons beim Hover */
 }

@@ -1,22 +1,33 @@
-// Setze die Ziel-Uhrzeit (24-Stunden-Format)
-const zielUhrzeit = new Date('2023-10-24T16:00:00').getTime();
+function setCountdown() {
+    const setDateInput = document.getElementById('setDate');
+    const setTimeInput = document.getElementById('setTime');
+    const selectedDate = new Date(`${setDateInput.value}T${setTimeInput.value}`);
 
-// Aktualisiere den Countdown alle 1 Sekunde
-const timer = setInterval(function () {
-    const jetzt = new Date().getTime();
-    const differenz = zielUhrzeit - jetzt;
-
-    const tage = Math.floor(differenz / (1000 * 60 * 60 * 24));
-    const stunden = Math.floor((differenz % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minuten = Math.floor((differenz % (1000 * 60 * 60)) / (1000 * 60));
-    const sekunden = Math.floor((differenz % (1000 * 60) / 1000));
-
-    const countdownElement = document.getElementById('timer');
-    countdownElement.innerHTML = `${tage} Tage, ${stunden} Stunden, ${minuten} Minuten, ${sekunden} Sekunden`;
-
-    // Wenn der Countdown abgelaufen ist
-    if (differenz < 0) {
-        clearInterval(timer);
-        countdownElement.innerHTML = "Countdown abgelaufen!";
+    if (selectedDate && !isNaN(selectedDate.getTime())) {
+        startCountdown(selectedDate);
+    } else {
+        alert('Ungültiges Datum oder Uhrzeit. Bitte überprüfen.');
     }
-}, 1000);
+}
+
+function startCountdown(zielUhrzeit) {
+    const countdownElement = document.getElementById('timer');
+    const timer = setInterval(updateCountdown, 1000);
+
+    function updateCountdown() {
+        const jetzt = new Date().getTime();
+        const differenz = zielUhrzeit - jetzt;
+
+        if (differenz <= 0) {
+            clearInterval(timer);
+            countdownElement.innerHTML = "Countdown abgelaufen!";
+        } else {
+            const tage = Math.floor(differenz / (1000 * 60 * 60 * 24));
+            const stunden = Math.floor((differenz % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minuten = Math.floor((differenz % (1000 * 60 * 60)) / (1000 * 60));
+            const sekunden = Math.floor((differenz % (1000 * 60) / 1000));
+
+            countdownElement.innerHTML = `${tage} Tage, ${stunden} Stunden, ${minuten} Minuten, ${sekunden} Sekunden`;
+        }
+    }
+}
