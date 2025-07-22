@@ -1,25 +1,118 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <title>Schulende</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Schulende Timer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #4f6ef7, #a64de3);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+      transition: background 0.5s ease;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1em;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+
+    #timer {
+      font-size: 2.5rem;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 15px 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #done {
+      font-size: 1.8rem;
+      color: #e0ffe0;
+      margin-top: 1em;
+    }
+
+    label {
+      font-size: 1rem;
+      margin-top: 10px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    input[type="time"] {
+      font-size: 1rem;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin: 10px;
+      cursor: pointer;
+      background: #ffffffcc;
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      #timer {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="countdown">
-        <h1>Countdown bis wir endllich gehen dürfen:</h1>
-        <div class="input-container">
-            <label for="setDate">Datum festlegen:</label>
-            <input type="date" id="setDate">
-        </div>
-        <div class="input-container">
-            <label for="setTime">Uhrzeit festlegen:</label>
-            <input type="time" id="setTime">
-        </div>
-        <button onclick="setCountdown()">Starten</button>
-        <div id="timer"></div>
-    </div>
-    <script src="script.js"></script>
+  <h1>Wann ist Schule aus?</h1>
+
+  <label for="schoolEndTime">🕒 Schulschluss wählen:</label><br>
+  <input type="time" id="schoolEndTime" value="13:15"><br>
+
+  <div id="timer">Lade...</div>
+  <div id="done" style="display: none;">🎉 Schule ist aus!</div>
+
+  <script>
+    let endTime = document.getElementById("schoolEndTime").value;
+
+    function updateTimer() {
+      if (!endTime) return;
+
+      const now = new Date();
+      const target = new Date();
+      const [h, m] = endTime.split(":");
+      target.setHours(h, m, 0, 0);
+
+      if (now > target) {
+        document.getElementById("timer").style.display = "none";
+        document.getElementById("done").style.display = "block";
+        return;
+      }
+
+      const diff = target - now;
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById("timer").textContent =
+        `${hours} Std ${minutes} Min ${seconds} Sek`;
+    }
+
+    document.getElementById("schoolEndTime").addEventListener("change", (e) => {
+      document.getElementById("done").style.display = "none";
+      document.getElementById("timer").style.display = "block";
+      endTime = e.target.value;
+      updateTimer();
+    });
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  </script>
 </body>
 </html>
